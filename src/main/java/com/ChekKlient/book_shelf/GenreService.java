@@ -14,14 +14,14 @@ public class GenreService {
 
     public List<Genre> findAll() {
         return jdbcTemplate.query(
-                "SELECT genre_id, title FROM genres",
-                (rs, rowNum) -> new Genre(rs.getLong("id"),
+                "SELECT genreId, title FROM GenreList",
+                (rs, rowNum) -> new Genre(rs.getLong("genreId"),
                         rs.getString("title")));
     }
 
     public void update(Genre genre) {
         jdbcTemplate.update(
-                "UPDATE genre SET title=? WHERE genre_id=?",
+                "UPDATE GenreList SET title=? WHERE genreId=?",
                 genre.getTitle(), genre.getId());
     }
 
