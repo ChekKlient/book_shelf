@@ -36,7 +36,7 @@ public class BookShelfApplication {
 			http
 					//.csrf().disable() // Use Vaadin's CSRF protection
 					.authorizeRequests()
-					.antMatchers("/").permitAll()
+                    .antMatchers("/","/log1n","/VAADIN/**", "/PUSH/**", "/UIDL/**").permitAll()
 					.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 					.anyRequest().authenticated() // User must be authenticated to access any part of the application
                     .and()
