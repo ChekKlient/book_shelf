@@ -18,7 +18,6 @@ import java.util.List;
 
 @SpringUI
 public class BookShelfUI extends UI {
-    @Autowired
     private AccessControl accessControl = new BasicAccessControl();
 
     @Autowired
