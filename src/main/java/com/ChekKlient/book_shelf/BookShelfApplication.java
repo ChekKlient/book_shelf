@@ -34,21 +34,7 @@ public class BookShelfApplication {
 		protected void configure(HttpSecurity http) throws Exception {
 			//@formatter:off
             http.
-                    authorizeRequests()
-                    .antMatchers("/","/log1n","/VAADIN/**", "/PUSH/**", "/UIDL/**").permitAll()
-                    .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                    .anyRequest().authenticated()
-                    .and()
-                    .formLogin()
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .and()
-                    .logout()
-                    .permitAll()
-                    .and()
-                    .csrf().disable()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/log1n"));
+                    authorizeRequests().anyRequest().permitAll();
             //@formatter:on
 		}
 
