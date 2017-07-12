@@ -18,6 +18,7 @@ import java.util.List;
 
 @SpringUI
 public class BookShelfUI extends UI {
+    @Autowired
     private AccessControl accessControl = new BasicAccessControl();
 
     @Autowired
@@ -62,7 +63,7 @@ public class BookShelfUI extends UI {
     }
 
     private void updateForm() {
-        if (grid.asSingleSelect().isEmpty()) {
+        if (grid.asSingleSelect().isEmpty()||!accessControl.isUserInRole("admin")) {
             setFormVisible(false);
         } else {
             genre = grid.asSingleSelect().getValue();
