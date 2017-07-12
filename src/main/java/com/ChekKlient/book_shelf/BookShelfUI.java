@@ -13,10 +13,8 @@ public class BookShelfUI extends UI {
 
     @Autowired
     private GenreService service;
-
     private Genre genre;
     private Binder<Genre> binder = new Binder<>(Genre.class);
-
     private Grid<Genre> grid = new Grid(Genre.class);
     private TextField title = new TextField("Title");
     private Button save = new Button("Save", e -> saveGenre());
