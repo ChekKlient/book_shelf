@@ -39,8 +39,11 @@ public class BookShelfUI extends UI {
     private void showMainView() {
         updateGrid();
         grid.setColumns("title");
+
+        VerticalLayout layout = new VerticalLayout(grid, title, save);
         if (accessControl.isUserSignedIn())
             grid.addSelectionListener(e -> updateForm());
+        else layout.addComponent(login);
 
         try{
                binder.bindInstanceFields(this);
@@ -50,7 +53,6 @@ public class BookShelfUI extends UI {
 
         };
 
-        VerticalLayout layout = new VerticalLayout(login, grid, title, save);
         setContent(layout);
     }
 
