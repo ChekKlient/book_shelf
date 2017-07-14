@@ -27,11 +27,16 @@ public class BookShelfUI extends UI {
     private Grid<Genre> grid = new Grid(Genre.class);
     private TextField title = new TextField("Title");
     private Button save = new Button("Save", e -> saveGenre());
+    private Button login = new Button("Login", e -> userLogin());
 
     @Override
     protected void init(VaadinRequest request) {
         Responsive.makeResponsive(this);
         setLocale(request.getLocale());
+        showMainView();
+    }
+
+    private void showMainView() {
         if (!accessControl.isUserSignedIn()) {
             setContent(new LoginScreen(accessControl, new LoginListener() {
                 @Override
@@ -39,22 +44,30 @@ public class BookShelfUI extends UI {
                     showMainView();
                 }
             }));
-        } else {
-            showMainView();
         }
-    }
 
-    private void showMainView() {
+
         updateGrid();
         grid.setColumns("title");
         grid.addSelectionListener(e -> updateForm());
 
         binder.bindInstanceFields(this);
 
-        VerticalLayout layout = new VerticalLayout(grid, title, save);
+        VerticalLayout layout = new VerticalLayout(login, grid, title, save);
         setContent(layout);
     }
 
+    private void userLogin()
+    {
+        if (!accessControl.isUserSignedIn()) {
+            setContent(new LoginScreen(accessControl, new LoginListener() {
+                @Override
+                public void loginSuccessful() {
+                    showMainView();
+                }
+            }));
+         }
+    }
     private void updateGrid() {
         List<Genre> genres = service.findAll();
         grid.setItems(genres);
@@ -74,6 +87,11 @@ public class BookShelfUI extends UI {
     private void setFormVisible(boolean visible) {
         title.setVisible(visible);
         save.setVisible(visible);
+        if (!accessControl.isUserSignedIn()) {
+            login.setVisible(true);
+        }
+        else
+            login.setVisible(false);
     }
 
     private void saveGenre() {
