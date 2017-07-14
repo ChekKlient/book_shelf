@@ -43,8 +43,7 @@ public class BookShelfUI extends UI {
             grid.addSelectionListener(e -> updateForm());
 
         try{
-            if (!binder.isValid())
-                binder.bindInstanceFields(this);
+               binder.bindInstanceFields(this);
         }
         catch (IllegalStateException e)
         {
