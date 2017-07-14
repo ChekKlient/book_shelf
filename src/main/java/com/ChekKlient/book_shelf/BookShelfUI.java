@@ -37,21 +37,19 @@ public class BookShelfUI extends UI {
     }
 
     private void showMainView() {
-        if (!accessControl.isUserSignedIn()) {
-            setContent(new LoginScreen(accessControl, new LoginListener() {
-                @Override
-                public void loginSuccessful() {
-                    showMainView();
-                }
-            }));
-        }
-
-
         updateGrid();
         grid.setColumns("title");
-        grid.addSelectionListener(e -> updateForm());
+        if (accessControl.isUserSignedIn())
+            grid.addSelectionListener(e -> updateForm());
 
-        binder.bindInstanceFields(this);
+        try{
+            if (!binder.isValid())
+                binder.bindInstanceFields(this);
+        }
+        catch (IllegalStateException e)
+        {
+
+        };
 
         VerticalLayout layout = new VerticalLayout(login, grid, title, save);
         setContent(layout);
@@ -60,6 +58,7 @@ public class BookShelfUI extends UI {
     private void userLogin()
     {
         if (!accessControl.isUserSignedIn()) {
+
             setContent(new LoginScreen(accessControl, new LoginListener() {
                 @Override
                 public void loginSuccessful() {
